@@ -3,6 +3,13 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import app from './app';
 
+process.on('uncaughtException', (err) => {
+	console.error(err.name, err.message);
+	console.log('UNHANDLED REJECTION 💣 💣 💥 💥');
+
+	process.exit(1);
+});
+
 dotenv.config();
 
 mongoose
@@ -23,6 +30,15 @@ mongoose
 // Listening code
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
 	console.log(colors.yellow.bold(`Server running in ${process.env.NODE_ENV} on port ${port}`));
+});
+
+process.on('unhandledRejection', (err: Error) => {
+	console.error(err.name, err.message);
+	console.log('UNHANDLED REJECTION 💣 💣 💥 💥');
+
+	server.close(() => {
+		process.exit(0);
+	});
 });

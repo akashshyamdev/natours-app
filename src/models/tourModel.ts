@@ -27,7 +27,6 @@ const tourSchema = new Schema(
 			unique: true,
 			maxLength: [40, 'The tour name must have less or equal length than 40 characters'],
 			minLength: [7, 'The tour name must have more or equal length than 10 characters'],
-			validate: [validator.isAlpha, 'Tour name must only contain characters'],
 		},
 		slug: String,
 		difficulty: {
