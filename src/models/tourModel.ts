@@ -2,7 +2,7 @@ import { model, Schema, Document, Query } from 'mongoose';
 import validator from 'validator';
 import slugify from 'slugify';
 
-export interface TourSimple extends Document {
+export interface ITourSimple extends Document {
 	id: string;
 	name: string;
 	duration: number;
@@ -106,12 +106,12 @@ const tourSchema = new Schema(
 );
 
 // Document virtual properties
-tourSchema.virtual('durationWeeks').get(function (this: TourSimple) {
+tourSchema.virtual('durationWeeks').get(function (this: ITourSimple) {
 	return Math.floor(this.duration / 7);
 });
 
 // Document middleware
-tourSchema.pre('save', function (this: TourSimple, next) {
+tourSchema.pre('save', function (this: ITourSimple, next) {
 	this.slug = slugify(this.name, { lower: true });
 
 	next();
@@ -133,4 +133,4 @@ tourSchema.pre('aggregate', function (next) {
 	next(null);
 });
 
-export const Tour = model<TourSimple>('Tour', tourSchema);
+export const Tour = model<ITourSimple>('Tour', tourSchema);

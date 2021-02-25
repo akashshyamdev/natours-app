@@ -1,8 +1,8 @@
 import { Query } from 'mongoose';
-import { TourSimple } from './../models/tourModel';
+import { ITourSimple } from './../models/tourModel';
 
 export default class APIFeatures {
-	constructor(public query: Query<TourSimple[], TourSimple>, public queryString: {}) {}
+	constructor(public query: Query<ITourSimple[], ITourSimple>, public queryString: {}) {}
 
 	filter() {
 		const queryObj = { ...this.queryString };
